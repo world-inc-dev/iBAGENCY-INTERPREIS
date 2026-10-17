@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/css/premium.css">
   <link rel="stylesheet" href="assets/css/gallery.css">
+  <link rel="stylesheet" href="assets/css/live-products.css">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <script type="application/ld+json">
   {
@@ -54,6 +55,8 @@
   </script>
   <script defer src="assets/js/main.js"></script>
   <script defer src="assets/js/gallery.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="assets/js/live-products.js"></script>
 </head>
 <body>
   <div class="announcement"><span class="announcement-dot"></span> REAL ESTATE <i>•</i> INVESTMENTS <i>•</i> WEALTH <i>•</i> GROWTH</div>
@@ -118,6 +121,17 @@
           <a class="gallery-card" href="#contact" data-interest="Car sales or purchase"><img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=85" alt="Premium automobile" loading="lazy"><span class="gallery-overlay"></span><span class="gallery-copy"><small>04 / AUTOMOTIVE</small><strong>Cars & Vehicles</strong><span>Share your vehicle needs <b>↗</b></span></span></a>
         </div>
         <p class="gallery-disclaimer">Illustrative photography only—not verified listings or a promise that a particular property, vehicle or investment is available. Request current details and complete independent checks before payment.</p>
+      </div>
+    </section>
+
+    <section class="section live-products-section" id="live-products" aria-labelledby="live-products-title">
+      <div class="container">
+        <div class="section-heading live-products-heading">
+          <div><div class="eyebrow dark"><span></span> OWNER-PUBLISHED INVENTORY</div><h2 id="live-products-title">Featured <em>listings.</em></h2></div>
+          <p>Explore current products published by iBAGENCY. Contact us for details and independently confirm availability before making any payment.</p>
+        </div>
+        <div class="live-product-grid" id="live-product-grid" aria-live="polite"><p class="live-products-empty">Loading current listings…</p></div>
+        <div class="live-products-browse"><a class="text-link" href="listings.html">View all current listings <span>↗</span></a></div>
       </div>
     </section>
 
