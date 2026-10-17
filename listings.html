@@ -18,6 +18,8 @@
   <link rel="stylesheet" href="assets/css/premium.css">
   <link rel="stylesheet" href="assets/css/listings.css">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="assets/js/live-products.js"></script>
   <script defer src="assets/js/listings.js"></script>
 </head>
 <body>
@@ -39,6 +41,12 @@
         <h1>Tell us what<br>you’re <em>looking for.</em></h1>
         <p>Looking for land, a home, a commercial property or a vehicle? Share your requirements and ask our team for current availability, location, pricing and supporting documents.</p>
         <a class="btn btn-gold" href="#request">Request Current Options <span>↗</span></a>
+      </div>
+    </section>
+    <section class="section live-products-section" id="live-listings">
+      <div class="container">
+        <div class="section-heading"><div><div class="eyebrow dark"><span></span> LIVE INVENTORY</div><h2>Available <em>listings.</em></h2></div><p>Products published by the iBAGENCY owner appear here with their current details and photos. Contact us to confirm availability before making decisions.</p></div>
+        <div class="live-product-grid" id="live-product-grid" aria-live="polite"><p class="live-products-empty">Loading current listings…</p></div>
       </div>
     </section>
     <section class="section listing-categories">
