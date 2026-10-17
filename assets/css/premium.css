@@ -1,0 +1,120 @@
+/* iBAGENCY premium refinement — accessible, responsive finishing layer */
+:root{--gold:#e8bd62;--gold2:#f5d995;--navy:#071225;--navy2:#0c1a31}
+::selection{background:#e8bd62;color:#071225}
+:focus-visible{outline:3px solid #e8bd62;outline-offset:4px}
+body{font-size:15px;-webkit-font-smoothing:antialiased}
+.site-header{backdrop-filter:blur(16px);background:rgba(7,18,37,.96)}
+.brand-mark{border-radius:4px;box-shadow:inset 0 0 0 3px rgba(232,189,98,.08)}
+.btn,.nav-cta,.service-card,.contact-form{border-radius:4px}
+.btn{min-height:52px}
+.btn:focus-visible,.nav-cta:focus-visible,.text-link:focus-visible{outline-offset:5px}
+.hero{min-height:690px}
+.hero-image{background-position:center 52%;transform:scale(1.01)}
+.hero-shade{background:linear-gradient(90deg,#071225 0%,rgba(7,18,37,.98) 29%,rgba(7,18,37,.82) 50%,rgba(7,18,37,.18) 100%),linear-gradient(0deg,rgba(7,18,37,.72),transparent 46%)}
+.hero h1{font-size:clamp(44px,6.1vw,78px);line-height:1.06;letter-spacing:-3px}
+.hero-lead{font-size:15px;max-width:550px}
+.hero-proof{padding-top:4px}
+.trust-grid{padding-block:28px}
+.section{padding-block:clamp(70px,8vw,112px)}
+.about-visual>img{border-radius:3px}
+.service-card{display:flex;flex-direction:column}
+.service-image{height:175px}
+.service-image img{filter:saturate(.82)}
+.service-body{display:flex;flex:1;flex-direction:column}
+.service-body p{min-height:0;flex:1}
+.service-body .text-link{align-self:flex-start}
+.opportunity-list>a{transition:padding .2s,color .2s}
+.opportunity-list>a:hover{padding-left:8px;color:var(--gold2)}
+.process-grid article{border-radius:3px;box-shadow:0 8px 24px rgba(10,20,35,.04)}
+.contact-form{border-top:4px solid var(--gold);border-radius:3px}
+.contact-form input,.contact-form select,.contact-form textarea{font:inherit;width:100%;max-width:100%;border:1px solid #d8dce4;border-radius:3px;padding:12px 13px;background:#fff;color:#111827}
+.contact-form input:focus,.contact-form select:focus,.contact-form textarea:focus{outline:2px solid #b78620;outline-offset:1px;border-color:#b78620}
+.contact-form label{display:block;font-size:11px;font-weight:700;margin-bottom:6px}
+.contact-form .form-row{margin-top:15px}
+.form-submit{width:100%;cursor:pointer;margin-top:18px}
+.floating-whatsapp{box-shadow:0 8px 26px rgba(0,0,0,.28);transition:transform .2s,box-shadow .2s}
+.floating-whatsapp:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.site-footer{background:#050d1b}
+.disclaimer{max-width:1160px;line-height:1.8}
+@media(max-width:1050px){
+ .main-nav{gap:17px}
+ .service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .service-image{height:210px}
+ .split{gap:52px}
+ .opportunity-layout,.contact-layout{gap:55px}
+}
+@media(max-width:760px){
+ .container{width:min(100% - 34px,600px)}
+ .announcement{height:auto;min-height:32px;padding:7px 10px;font-size:8px;letter-spacing:1.35px;gap:7px;text-align:center}
+ .site-header{height:74px}
+ .brand{gap:9px}
+ .brand-mark{width:38px;height:38px;font-size:22px}
+ .brand-copy strong{font-size:16px;letter-spacing:1px}
+ .brand-copy small{font-size:7px;letter-spacing:.7px}
+ .menu-toggle{display:block;cursor:pointer}
+ .main-nav{display:none;position:absolute;top:73px;left:0;right:0;background:#071225;padding:18px 22px 24px;flex-direction:column;align-items:stretch;gap:0;border-top:1px solid rgba(255,255,255,.1);box-shadow:0 18px 28px rgba(0,0,0,.22)}
+ .main-nav.open{display:flex}
+ .main-nav>a:not(.nav-cta){padding:13px 2px;border-bottom:1px solid rgba(255,255,255,.09)}
+ .nav-cta{margin-top:15px;text-align:center}
+ .hero{min-height:650px;align-items:flex-start}
+ .hero-image{inset:0;background-position:58% center}
+ .hero-shade{background:linear-gradient(90deg,rgba(7,18,37,.97),rgba(7,18,37,.77)),linear-gradient(0deg,rgba(7,18,37,.7),transparent)}
+ .hero-content{padding-top:76px;padding-bottom:92px}
+ .eyebrow{font-size:9px;letter-spacing:1.55px}
+ .hero h1{font-size:clamp(43px,12vw,62px);letter-spacing:-2.2px;margin-top:23px}
+ .hero-lead{font-size:14px;line-height:1.8}
+ .hero-actions{align-items:stretch}
+ .hero-actions .btn{flex:1 1 180px}
+ .hero-proof{margin-top:38px;align-items:flex-start}
+ .hero-proof small{line-height:1.6}
+ .hero-caption{width:calc(100% - 34px);font-size:8px;letter-spacing:1px;bottom:15px}
+ .trust-grid{grid-template-columns:1fr 1fr;gap:20px 12px;padding-block:24px}
+ .trust-grid>div{border:0;padding:0;align-items:flex-start}
+ .trust-symbol{font-size:23px}
+ .trust-grid strong{font-size:11px}
+ .trust-grid small{font-size:9px;line-height:1.5}
+ .section{padding-block:70px}
+ .split{grid-template-columns:1fr;gap:43px}
+ .about-visual{padding:0 13px 15px 0}
+ .about-visual>img{height:340px}
+ .image-note{left:-5px;bottom:38px;padding:14px 16px}
+ .section-copy h2,.section-heading h2,.opportunity-layout h2,.contact-copy h2{font-size:clamp(34px,9vw,46px);letter-spacing:-1.5px}
+ .mini-values{gap:12px}
+ .mini-values small{line-height:1.6}
+ .section-heading{display:block;margin-bottom:30px}
+ .section-heading>p{margin-top:17px}
+ .service-grid{grid-template-columns:1fr;gap:15px}
+ .service-image{height:220px}
+ .service-body{padding:20px}
+ .service-body p{font-size:12px}
+ .opportunities-section{padding:70px 0}
+ .opportunity-layout{grid-template-columns:1fr;gap:40px}
+ .opportunity-list>a{gap:12px;padding:17px 0}
+ .opportunity-list strong{font-size:12px}
+ .opportunity-list small{line-height:1.6}
+ .process-grid{grid-template-columns:1fr 1fr;gap:13px;margin-top:30px}
+ .process-grid article{padding:20px 15px;min-height:0}
+ .process-grid h3{font-size:13px}
+ .contact-section{padding:72px 0}
+ .contact-layout{grid-template-columns:1fr;gap:36px}
+ .contact-number strong{font-size:21px}
+ .contact-form{padding:24px 19px}
+ .footer-main{gap:25px;align-items:flex-start}
+ .footer-links{flex-wrap:wrap;gap:14px}
+ .footer-bottom{gap:8px;flex-direction:column}
+ .disclaimer{font-size:10px;padding-bottom:20px}
+}
+@media(max-width:390px){
+ .container{width:calc(100% - 28px)}
+ .announcement{font-size:7px;letter-spacing:1px}
+ .brand-copy strong{font-size:14px}
+ .brand-copy small{font-size:6px}
+ .hero h1{font-size:42px}
+ .hero-caption{width:calc(100% - 28px);letter-spacing:.6px}
+ .trust-grid{grid-template-columns:1fr}
+ .process-grid{grid-template-columns:1fr}
+ .mini-values{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
