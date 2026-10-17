@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08101f">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Owner Dashboard | iBAGENCY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="assets/js/admin.js"></script>
+</head>
+<body class="admin-body">
+  <header class="admin-top"><a class="brand" href="index.html"><span class="brand-mark">i<span>B</span></span><span class="brand-copy"><strong>iBAGENCY</strong><small>OWNER WORKSPACE</small></span></a><a href="listings.html">View public listings ↗</a></header>
+  <main class="admin-wrap">
+    <section class="admin-intro"><div class="eyebrow"><span></span> PRIVATE OWNER AREA</div><h1>Manage your <em>listings.</em></h1><p>Upload real products, add photos, edit details and choose whether each item is published.</p></section>
+    <section class="admin-panel" id="login-panel">
+      <h2>Owner sign in</h2><p>Use the owner account created in Supabase Authentication.</p>
+      <form id="login-form"><label for="login-email">Email</label><input id="login-email" type="email" autocomplete="username" required><label for="login-password">Password</label><input id="login-password" type="password" autocomplete="current-password" required><button class="admin-btn" type="submit">Sign in securely</button></form>
+    </section>
+    <section class="admin-workspace" id="workspace" hidden>
+      <div class="admin-workspace-head"><div><h2>Your product catalogue</h2><p id="signed-in-as"></p></div><button id="sign-out" class="admin-btn admin-btn-quiet" type="button">Sign out</button></div>
+      <p class="admin-message" id="admin-message" aria-live="polite"></p>
+      <form id="product-form" class="admin-panel">
+        <input type="hidden" id="product-id">
+        <h3 id="form-heading">Add a product</h3>
+        <div class="admin-form-grid">
+          <div class="admin-field"><label for="product-title">Product title *</label><input id="product-title" required maxlength="160" placeholder="e.g. 50 x 100 ft plot in Wakiso"></div>
+          <div class="admin-field"><label for="product-category">Category *</label><select id="product-category" required><option>Land</option><option>House / Property</option><option>Car / Vehicle</option><option>Commercial Property</option><option>Gold / Precious Metals</option><option>Other</option></select></div>
+          <div class="admin-field"><label for="product-price">Price (optional)</label><input id="product-price" type="number" min="0" step="0.01" placeholder="0"></div>
+          <div class="admin-field"><label for="product-currency">Currency</label><select id="product-currency"><option>UGX</option><option>NGN</option><option>KES</option><option>USD</option><option>GBP</option><option>EUR</option><option>Other</option></select></div>
+          <div class="admin-field admin-wide"><label for="product-location">Location *</label><input id="product-location" required maxlength="200" placeholder="Area, city, country"></div>
+          <div class="admin-field admin-wide"><label for="product-description">Description and key details</label><textarea id="product-description" rows="4" maxlength="5000" placeholder="Size, year, condition, features, title/document status, etc."></textarea></div>
+          <div class="admin-field admin-wide"><label for="product-images">Product photos (JPEG, PNG or WebP; up to 10 MB each)</label><input id="product-images" type="file" accept="image/jpeg,image/png,image/webp" multiple><small>You can select several real photos. Images are stored in Supabase Storage.</small><div id="existing-images" class="existing-images"></div></div>
+          <div class="admin-field"><label for="product-status">Listing status</label><select id="product-status"><option value="draft">Draft (private)</option><option value="published">Published (public)</option><option value="sold">Sold</option><option value="unavailable">Unavailable</option></select></div>
+        </div>
+        <div class="admin-actions"><button class="admin-btn" type="submit" id="save-product">Save product</button><button class="admin-btn admin-btn-quiet" type="button" id="cancel-edit">Clear form</button></div>
+      </form>
+      <section class="admin-panel"><h3>Saved products</h3><div id="product-list" class="admin-product-list"></div></section>
+    </section>
+    <p class="admin-footnote">Only approved owner accounts can change listings. Do not publish a listing until you have permission to advertise it and have checked its details.</p>
+  </main>
+</body>
+</html>
