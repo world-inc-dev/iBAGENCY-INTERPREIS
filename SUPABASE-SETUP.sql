@@ -103,6 +103,11 @@ create policy "Admins can delete iBAGENCY product photos"
   on storage.objects for delete to authenticated
   using (bucket_id = 'ibagency-products' and public.ibagency_is_admin());
 
+-- Explicit API grants; row-level security policies above still control which rows/actions are allowed.
+grant select on public.ibagency_admins to authenticated;
+grant select on public.ibagency_products to anon, authenticated;
+grant insert, update, delete on public.ibagency_products to authenticated;
+
 -- OWNER BOOTSTRAP:
 -- 1. In Supabase Dashboard > Authentication > Users, create the owner's user with email/password.
 -- 2. Copy that user's UUID.
