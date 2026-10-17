@@ -1,10 +1,13 @@
 (() => {
-  document.querySelectorAll('.gallery-card[data-interest]').forEach(card => {
-    card.addEventListener('click', () => {
-      const select = document.getElementById('interest');
-      if (!select) return;
-      const wanted = card.getAttribute('data-interest');
-      const option = Array.from(select.options).find(item => item.text.trim() === wanted);
+  const select = document.getElementById('interest');
+  if (!select) return;
+
+  document.querySelectorAll('[data-interest]').forEach(link => {
+    link.addEventListener('click', () => {
+      const wanted = (link.getAttribute('data-interest') || '').trim().toLowerCase();
+      const option = Array.from(select.options).find(item =>
+        item.text.trim().toLowerCase() === wanted
+      );
       if (option) select.value = option.value;
     });
   });
