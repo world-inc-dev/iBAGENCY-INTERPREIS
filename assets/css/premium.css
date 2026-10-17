@@ -134,3 +134,12 @@ body{font-size:15px;-webkit-font-smoothing:antialiased}
 .faq-list details p{font-size:12px;line-height:1.85;color:#596273;margin:0;padding:0 0 20px;max-width:680px}
 .faq-list summary:focus-visible{outline-offset:5px}
 @media(max-width:760px){.faq-layout{grid-template-columns:1fr;gap:30px}.faq-list summary{font-size:12px;padding:17px 0}.faq-list details{padding-inline:16px}}
+
+
+/* Conversion-focused links to the current opportunities page */
+.opportunity-actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:24px}
+.opportunity-actions .btn{margin-top:0}
+.opportunity-browse{display:inline-flex;align-items:center;gap:9px;color:var(--gold2);font:700 11px/1.5 var(--font);text-decoration:none;padding:12px 0;border-bottom:1px solid rgba(245,217,149,.55)}
+.opportunity-browse:hover{color:#fff;border-color:#fff}
+.opportunity-browse:focus-visible{outline:3px solid var(--gold2);outline-offset:5px}
+@media(max-width:760px){.opportunity-actions{align-items:stretch;flex-direction:column;gap:8px}.opportunity-actions .btn{align-self:flex-start}.opportunity-browse{align-self:flex-start}}
