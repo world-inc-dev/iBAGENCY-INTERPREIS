@@ -167,7 +167,7 @@ grant select, update, delete on public.ibagency_inquiries to authenticated;
 do $$
 declare
   owner_user_id uuid;
-  owner_email text := 'worldbridan3@gmail.com';
+  owner_email text := 'ibagency@gmail.com';
 begin
   select id into owner_user_id
   from auth.users
