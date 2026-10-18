@@ -37,7 +37,7 @@
     $('product-list').innerHTML=data.map(p=>{
       const photo=p.image_urls&&p.image_urls[0] ? p.image_urls[0] : '';
       const price=p.price===null?'Price on request':escapeHtml(p.currency)+' '+Number(p.price).toLocaleString();
-      return '<article class="admin-product"><img src="'+escapeHtml(photo||'assets/img/favicon.svg')+'" alt="" loading="lazy"><div><h4>'+escapeHtml(p.title)+'</h4><p>'+escapeHtml(p.category)+' · '+escapeHtml(p.location)+'</p><p>'+price+' · <strong>'+escapeHtml(p.status)+'</strong></p></div><div class="admin-product-actions"><button type="button" data-edit="'+p.id+'">Edit</button><button type="button" data-delete="'+p.id+'" class="delete-product">Delete</button></div></article>';
+      return '<article class="admin-product"><img src="'+escapeHtml(photo||'assets/img/favicon.svg')+'" alt="" loading="lazy"><div><h4>'+escapeHtml(p.title)+'</h4><p>'+escapeHtml(p.category)+' · '+escapeHtml(p.listing_type||'For Sale')+' · '+escapeHtml(p.location)+'</p><p>'+price+' · <strong>'+escapeHtml(p.status)+'</strong></p></div><div class="admin-product-actions"><button type="button" data-edit="'+p.id+'">Edit</button><button type="button" data-delete="'+p.id+'" class="delete-product">Delete</button></div></article>';
     }).join('');
     $('product-list').querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>editProduct(data.find(p=>p.id===b.dataset.edit))));
     $('product-list').querySelectorAll('[data-delete]').forEach(b=>b.addEventListener('click',()=>deleteProduct(b.dataset.delete)));
@@ -47,7 +47,7 @@
     $('product-id').value=p.id; $('product-title').value=p.title; $('product-category').value=p.category;
     $('product-price').value=p.price??''; $('product-currency').value=p.currency; $('product-location').value=p.location;
     $('product-description').value=p.description||''; $('product-status').value=p.status;
-    currentImages=[...(p.image_urls||[])]; renderExistingImages();
+    currentImages=[...(p.image_urls||[])]; $('product-listing-type').value=p.listing_type||'For Sale'; renderExistingImages();
     $('form-heading').textContent='Edit product'; $('save-product').textContent='Update product';
     $('product-form').scrollIntoView({behavior:'smooth',block:'start'});
   }
@@ -63,8 +63,18 @@
     const {data,error}=await client.from('ibagency_admins').select('user_id').eq('user_id',user.id).maybeSingle();
     if(error||!data){await client.auth.signOut();say('This account is not approved as an owner. Ask the project owner to add its user UUID to public.ibagency_admins in Supabase SQL Editor.',true);return;}
     loginPanel.hidden=true; workspace.hidden=false; $('signed-in-as').textContent='Signed in as '+user.email;
-    await loadProducts();
+    await loadProducts(); await loadInquiries();
   }
+  async function loadInquiries(){
+    const box=$('inquiry-list');if(!box)return;box.innerHTML='<p>Loading inquiries…</p>';
+    const {data,error}=await client.from('ibagency_inquiries').select('*').order('created_at',{ascending:false});
+    if(error){box.innerHTML='<p>Could not load inquiries. Run the latest SUPABASE-SETUP.sql in Supabase SQL Editor. '+escapeHtml(error.message)+'</p>';return;}
+    if(!data||!data.length){box.innerHTML='<p>No website inquiries yet.</p>';return;}
+    box.innerHTML=data.map(i=>'<article class="admin-inquiry"><div class="admin-inquiry-head"><div><h4>'+escapeHtml(i.name)+'</h4><p>'+escapeHtml(i.category)+' · '+escapeHtml(i.created_at?new Date(i.created_at).toLocaleString():'')+'</p></div><select data-inquiry-status="'+i.id+'" aria-label="Inquiry status"><option value="new" '+(i.status==='new'?'selected':'')+'>New</option><option value="contacted" '+(i.status==='contacted'?'selected':'')+'>Contacted</option><option value="closed" '+(i.status==='closed'?'selected':'')+'>Closed</option></select></div><p><strong>Phone:</strong> '+escapeHtml(i.phone)+' · <strong>Location:</strong> '+escapeHtml(i.location||'Not specified')+'</p><p><strong>Budget:</strong> '+escapeHtml(i.budget||'Not specified')+'</p><p>'+escapeHtml(i.details||'No extra details')+'</p><div class="admin-inquiry-actions"><a href="https://wa.me/'+escapeHtml(i.phone.replace(/[^0-9]/g,''))+'?text='+encodeURIComponent('Hello '+i.name+', thank you for contacting iBAGENCY about '+i.category+'.')+'" target="_blank" rel="noopener noreferrer">Follow up on WhatsApp ↗</a><button type="button" data-delete-inquiry="'+i.id+'" class="delete-product">Delete inquiry</button></div></article>').join('');
+    box.querySelectorAll('[data-inquiry-status]').forEach(s=>s.addEventListener('change',async()=>{const {error}=await client.from('ibagency_inquiries').update({status:s.value,updated_at:new Date().toISOString()}).eq('id',s.dataset.inquiryStatus);if(error){say('Could not update inquiry: '+error.message,true);return;}say('Inquiry status updated.');}));
+    box.querySelectorAll('[data-delete-inquiry]').forEach(b=>b.addEventListener('click',async()=>{if(!confirm('Delete this inquiry permanently?'))return;const {error}=await client.from('ibagency_inquiries').delete().eq('id',b.dataset.deleteInquiry);if(error){say('Could not delete inquiry: '+error.message,true);return;}say('Inquiry deleted.');await loadInquiries();}));
+  }
+  $('refresh-inquiries')?.addEventListener('click',loadInquiries);
   $('login-form').addEventListener('submit',async e=>{
     e.preventDefault(); const button=e.currentTarget.querySelector('button'); button.disabled=true;
     say('Signing in…');
@@ -82,7 +92,7 @@
       await uploadSelectedFiles();
       const id=$('product-id').value;
       const payload={
-        title:$('product-title').value.trim(),category:$('product-category').value,
+        title:$('product-title').value.trim(),category:$('product-category').value,listing_type:$('product-listing-type').value,
         description:$('product-description').value.trim(),price:$('product-price').value===''?null:Number($('product-price').value),
         currency:$('product-currency').value,location:$('product-location').value.trim(),
         image_urls:currentImages,status:$('product-status').value
