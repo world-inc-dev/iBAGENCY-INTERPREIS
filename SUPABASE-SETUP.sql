@@ -160,3 +160,28 @@ create policy "Admins can delete iBAGENCY inquiries"
   using (public.ibagency_is_admin());
 grant insert on public.ibagency_inquiries to anon, authenticated;
 grant select, update, delete on public.ibagency_inquiries to authenticated;
+
+-- OPTIONAL ONE-STEP OWNER BOOTSTRAP
+-- If the owner Auth account uses a different email, change the value below.
+-- This runs safely if the owner is already listed.
+do $$
+declare
+  owner_user_id uuid;
+  owner_email text := 'worldbridan3@gmail.com';
+begin
+  select id into owner_user_id
+  from auth.users
+  where lower(email) = lower(owner_email)
+  order by created_at asc
+  limit 1;
+
+  if owner_user_id is null then
+    raise notice 'Owner Auth user % was not found. Change owner_email here or run OWNER-BOOTSTRAP.sql after creating the owner account.', owner_email;
+  else
+    insert into public.ibagency_admins (user_id)
+    values (owner_user_id)
+    on conflict (user_id) do nothing;
+    raise notice 'iBAGENCY owner dashboard access is enabled for %.', owner_email;
+  end if;
+end
+$$;
