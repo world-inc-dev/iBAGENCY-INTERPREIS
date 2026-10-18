@@ -114,3 +114,49 @@ grant insert, update, delete on public.ibagency_products to authenticated;
 -- 3. Run this separately after replacing the placeholder:
 -- insert into public.ibagency_admins (user_id) values ('PASTE_OWNER_AUTH_USER_UUID_HERE');
 -- Never add this admin row from the public website.
+
+
+-- Full property-platform upgrade (safe to run again on the existing project).
+alter table public.ibagency_products
+  add column if not exists listing_type text not null default 'For Sale'
+  check (listing_type in ('For Sale','For Rent','For Lease','Sale or Rent'));
+
+create table if not exists public.ibagency_inquiries (
+  id uuid primary key default gen_random_uuid(),
+  name text not null check (char_length(name) between 1 and 100),
+  phone text not null check (char_length(phone) between 3 and 50),
+  category text not null check (char_length(category) between 1 and 120),
+  location text not null default '' check (char_length(location) <= 160),
+  budget text not null default '' check (char_length(budget) <= 100),
+  details text not null default '' check (char_length(details) <= 1500),
+  status text not null default 'new' check (status in ('new','contacted','closed')),
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+create index if not exists ibagency_inquiries_status_created_idx
+  on public.ibagency_inquiries(status, created_at desc);
+alter table public.ibagency_inquiries enable row level security;
+
+drop policy if exists "Public can submit iBAGENCY inquiries" on public.ibagency_inquiries;
+create policy "Public can submit iBAGENCY inquiries"
+  on public.ibagency_inquiries for insert to anon, authenticated
+  with check (
+    char_length(name) between 1 and 100 and
+    char_length(phone) between 3 and 50 and
+    char_length(category) between 1 and 120
+  );
+drop policy if exists "Admins can view iBAGENCY inquiries" on public.ibagency_inquiries;
+create policy "Admins can view iBAGENCY inquiries"
+  on public.ibagency_inquiries for select to authenticated
+  using (public.ibagency_is_admin());
+drop policy if exists "Admins can update iBAGENCY inquiries" on public.ibagency_inquiries;
+create policy "Admins can update iBAGENCY inquiries"
+  on public.ibagency_inquiries for update to authenticated
+  using (public.ibagency_is_admin())
+  with check (public.ibagency_is_admin());
+drop policy if exists "Admins can delete iBAGENCY inquiries" on public.ibagency_inquiries;
+create policy "Admins can delete iBAGENCY inquiries"
+  on public.ibagency_inquiries for delete to authenticated
+  using (public.ibagency_is_admin());
+grant insert on public.ibagency_inquiries to anon, authenticated;
+grant select, update, delete on public.ibagency_inquiries to authenticated;
