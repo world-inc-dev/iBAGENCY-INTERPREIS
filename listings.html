@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08101f">
-  <meta name="description" content="Request current property, land, development and vehicle opportunities from iBAGENCY Marketing Investment Empire. Confirm availability and documents independently before paying.">
-  <meta property="og:title" content="Current Opportunities | iBAGENCY">
+  <meta name="description" content="Browse and search iBAGENCY property listings by type, location and price, and contact the team about homes, commercial property, land and rentals. Confirm availability and documents independently before paying.">
+  <meta property="og:title" content="Property Listings for Sale & Rent | iBAGENCY">
   <meta property="og:description" content="Tell iBAGENCY what you are looking for and request current details directly on WhatsApp.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://world-inc-dev.github.io/iBAGENCY-INTERPREIS/listings.html">
@@ -45,7 +45,16 @@
     </section>
     <section class="section live-products-section" id="live-listings">
       <div class="container">
-        <div class="section-heading"><div><div class="eyebrow dark"><span></span> LIVE INVENTORY</div><h2>Available <em>listings.</em></h2></div><p>Products published by the iBAGENCY owner appear here with their current details and photos. Contact us to confirm availability before making decisions.</p></div>
+        <div class="section-heading"><div><div class="eyebrow dark"><span></span> LIVE INVENTORY</div><h2>Available <em>listings.</em></h2></div><p>Browse owner-published properties, commercial spaces, land and other opportunities. Search by category, sale or rental status, location and price.</p></div>
+        <div class="listing-filter-panel" aria-label="Search property listings">
+          <div class="listing-filter-search"><label for="listing-search">Search listings</label><input id="listing-search" type="search" placeholder="Property name, feature or keyword"></div>
+          <div><label for="listing-filter-category">Property category</label><select id="listing-filter-category"><option value="">All categories</option><option>Land</option><option>House / Property</option><option>Commercial Property</option><option>Car / Vehicle</option><option>Gold / Precious Metals</option><option>Other</option></select></div>
+          <div><label for="listing-filter-type">Sale or rental</label><select id="listing-filter-type"><option value="">Sale & rental</option><option>For Sale</option><option>For Rent</option><option>For Lease</option><option>Sale or Rent</option></select></div>
+          <div><label for="listing-filter-location">Location contains</label><input id="listing-filter-location" type="search" placeholder="e.g. Kampala"></div>
+          <div><label for="listing-filter-min">Minimum price</label><input id="listing-filter-min" type="number" min="0" placeholder="No minimum"></div>
+          <div><label for="listing-filter-max">Maximum price</label><input id="listing-filter-max" type="number" min="0" placeholder="No maximum"></div>
+          <div class="listing-filter-actions"><span id="listing-result-count" aria-live="polite">Loading listings…</span><button id="listing-filter-reset" type="button">Clear filters</button></div>
+        </div>
         <div class="live-product-grid" id="live-product-grid" aria-live="polite"><p class="live-products-empty">Loading current listings…</p></div>
       </div>
     </section>
@@ -73,7 +82,7 @@
           <div class="form-row"><label for="req-budget">Budget / price range (optional)</label><input id="req-budget" name="budget" maxlength="100" placeholder="Your approximate budget and currency"></div>
           <div class="form-row"><label for="req-details">Other requirements</label><textarea id="req-details" name="details" rows="4" maxlength="1200" placeholder="Size, features, timing or other details"></textarea></div>
           <button class="btn btn-gold request-submit" type="submit">Prepare WhatsApp Enquiry <span>↗</span></button>
-          <p class="form-privacy">This static website does not store or send your form details to a database. WhatsApp opens for you to review and send the message.</p>
+          <p class="form-privacy">Your enquiry can be saved securely for the iBAGENCY team and will also open in WhatsApp for you to review and send.</p>
           <p class="form-status" id="request-status" aria-live="polite"></p>
         </form>
       </div>
