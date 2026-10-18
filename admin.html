@@ -17,7 +17,7 @@
 <body class="admin-body">
   <header class="admin-top"><a class="brand" href="index.html"><span class="brand-mark">i<span>B</span></span><span class="brand-copy"><strong>iBAGENCY</strong><small>OWNER WORKSPACE</small></span></a><a href="listings.html">View public listings ↗</a></header>
   <main class="admin-wrap">
-    <section class="admin-intro"><div class="eyebrow"><span></span> PRIVATE OWNER AREA</div><h1>Manage your <em>listings.</em></h1><p>Upload real products, add photos, edit details and choose whether each item is published.</p></section>
+    <section class="admin-intro"><div class="eyebrow"><span></span> PRIVATE OWNER AREA</div><h1>Manage your <em>listings.</em></h1><p>Manage property listings, upload photos, set sale or rental status, filter the public catalogue and follow up customer inquiries.</p></section>
     <section class="admin-panel" id="login-panel">
       <h2>Owner sign in</h2><p>Use the owner account created in Supabase Authentication.</p>
       <form id="login-form"><label for="login-email">Email</label><input id="login-email" type="email" autocomplete="username" required><label for="login-password">Password</label><input id="login-password" type="password" autocomplete="current-password" required><button class="admin-btn" type="submit">Sign in securely</button></form>
@@ -31,6 +31,7 @@
         <div class="admin-form-grid">
           <div class="admin-field"><label for="product-title">Product title *</label><input id="product-title" required maxlength="160" placeholder="e.g. 50 x 100 ft plot in Wakiso"></div>
           <div class="admin-field"><label for="product-category">Category *</label><select id="product-category" required><option>Land</option><option>House / Property</option><option>Car / Vehicle</option><option>Commercial Property</option><option>Gold / Precious Metals</option><option>Other</option></select></div>
+          <div class="admin-field"><label for="product-listing-type">Listing type</label><select id="product-listing-type"><option>For Sale</option><option>For Rent</option><option>For Lease</option><option>Sale or Rent</option></select></div>
           <div class="admin-field"><label for="product-price">Price (optional)</label><input id="product-price" type="number" min="0" step="0.01" placeholder="0"></div>
           <div class="admin-field"><label for="product-currency">Currency</label><select id="product-currency"><option>UGX</option><option>NGN</option><option>KES</option><option>USD</option><option>GBP</option><option>EUR</option><option>Other</option></select></div>
           <div class="admin-field admin-wide"><label for="product-location">Location *</label><input id="product-location" required maxlength="200" placeholder="Area, city, country"></div>
@@ -40,7 +41,8 @@
         </div>
         <div class="admin-actions"><button class="admin-btn" type="submit" id="save-product">Save product</button><button class="admin-btn admin-btn-quiet" type="button" id="cancel-edit">Clear form</button></div>
       </form>
-      <section class="admin-panel"><h3>Saved products</h3><div id="product-list" class="admin-product-list"></div></section>
+      <section class="admin-panel"><div class="admin-section-head"><div><h3>Customer inquiries</h3><p>Enquiries submitted through the website. Follow up and update their status.</p></div><button id="refresh-inquiries" class="admin-btn admin-btn-quiet" type="button">Refresh</button></div><div id="inquiry-list" class="admin-product-list"><p>Loading inquiries…</p></div></section>
+      <section class="admin-panel"><h3>Saved property & product listings</h3><div id="product-list" class="admin-product-list"></div></section>
     </section>
     <p class="admin-footnote">Only approved owner accounts can change listings. Do not publish a listing until you have permission to advertise it and have checked its details.</p>
   </main>
