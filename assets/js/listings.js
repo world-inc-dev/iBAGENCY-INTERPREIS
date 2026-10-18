@@ -42,8 +42,26 @@
       'Please share current availability, full costs and supporting verification details.'
     ].filter(Boolean);
     const url = 'https://wa.me/2349118045889?text=' + encodeURIComponent(fields.join('\n'));
-    const opened = window.open(url, '_blank', 'noopener,noreferrer');
     const status = document.getElementById('request-status');
-    if (status) status.textContent = opened ? 'WhatsApp opened. Review the message and press Send to contact iBAGENCY.' : 'If WhatsApp did not open, use the WhatsApp contact link on this page and send your enquiry manually.';
+    // Open WhatsApp synchronously so mobile browsers do not block the new tab after an async database request.
+    const whatsappWindow = window.open(url, '_blank', 'noopener,noreferrer');
+    const payload = {
+      name: String(data.get('name') || '').trim(),
+      phone: String(data.get('phone') || '').trim(),
+      category: String(data.get('category') || '').trim(),
+      location: String(data.get('location') || '').trim(),
+      budget: String(data.get('budget') || '').trim(),
+      details: String(data.get('details') || '').trim()
+    };
+    let saved = false;
+    if (db) {
+      try {
+        const { error } = await db.from('ibagency_inquiries').insert(payload);
+        saved = !error;
+      } catch (_error) {}
+    }
+    if (status) status.textContent = (saved ? 'Your inquiry has been saved for the iBAGENCY team. ' : 'The inquiry could not be saved to the website database. ') +
+      (whatsappWindow ? 'WhatsApp opened. Review the message and press Send.' : 'If WhatsApp did not open, use the WhatsApp contact link to send your enquiry manually.') +
+      (!saved ? ' The team receives your message only after you send it in WhatsApp.' : '');
   });
 })();
