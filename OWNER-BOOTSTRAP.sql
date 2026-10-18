@@ -10,7 +10,7 @@
 do $$
 declare
   owner_user_id uuid;
-  owner_email text := 'worldbridan3@gmail.com';
+  owner_email text := 'ibagency@gmail.com';
 begin
   select id
     into owner_user_id
@@ -35,4 +35,4 @@ $$;
 select a.user_id, u.email, a.created_at as owner_access_created_at
 from public.ibagency_admins a
 join auth.users u on u.id = a.user_id
-where lower(u.email) = lower('worldbridan3@gmail.com');
+where lower(u.email) = lower('ibagency@gmail.com');
