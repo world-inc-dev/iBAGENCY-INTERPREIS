@@ -21,8 +21,11 @@
     document.getElementById('request')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     window.setTimeout(() => document.getElementById('req-name')?.focus({ preventScroll: true }), 350);
   }));
+  const SUPABASE_URL='https://jkwhnahxkmqzplgvpbre.supabase.co';
+  const SUPABASE_KEY='sb_publishable_tHga70SJR6CGFz3VPBcfWg_UtY_bfai';
+  const db=window.supabase?window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY):null;
   const form = document.getElementById('listing-request');
-  if (form) form.addEventListener('submit', event => {
+  if (form) form.addEventListener('submit', async event => {
     event.preventDefault();
     if (!form.reportValidity()) return;
     const data = new FormData(form);
