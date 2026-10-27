@@ -7,6 +7,10 @@
   let user = null, currentImages = [];
 
   function say(text, error=false) { message.textContent = text; message.classList.toggle('error', error); }
+  function sayLogin(text, error=false) {
+    const box = $('login-message');
+    if (box) { box.textContent = text; box.classList.toggle('error', error); }
+  }
   function escapeHtml(value='') { return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
   function resetForm() {
     $('product-form').reset(); $('product-id').value = ''; currentImages = [];
@@ -76,12 +80,29 @@
   }
   $('refresh-inquiries')?.addEventListener('click',loadInquiries);
   $('login-form').addEventListener('submit',async e=>{
-    e.preventDefault(); const button=e.currentTarget.querySelector('button'); button.disabled=true;
-    say('Signing in…');
-    const {data,error}=await client.auth.signInWithPassword({email:$('login-email').value.trim(),password:$('login-password').value});
-    button.disabled=false;
-    if(error){say('Sign-in failed: '+error.message,true);return;}
-    await enterWorkspace(data.user);
+    e.preventDefault();
+    const button=e.currentTarget.querySelector('button');
+    const originalText=button.textContent;
+    button.disabled=true;
+    button.textContent='Signing in…';
+    sayLogin('Connecting securely to sign in…');
+    try {
+      if (!window.supabase || typeof window.supabase.createClient !== 'function') {
+        throw new Error('The sign-in service did not load. Check your internet connection, refresh the page, and try again.');
+      }
+      const {data,error}=await client.auth.signInWithPassword({
+        email:$('login-email').value.trim(),
+        password:$('login-password').value
+      });
+      if(error) throw error;
+      sayLogin('');
+      await enterWorkspace(data.user);
+    } catch(err) {
+      sayLogin('Sign-in failed: '+(err && err.message ? err.message : 'Unexpected error. Please refresh and try again.'),true);
+    } finally {
+      button.disabled=false;
+      button.textContent=originalText;
+    }
   });
   $('sign-out').addEventListener('click',async()=>{await client.auth.signOut();workspace.hidden=true;loginPanel.hidden=false;resetForm();say('You have signed out.');});
   $('cancel-edit').addEventListener('click',resetForm);
